@@ -1,12 +1,4 @@
-import type { ReactNode } from "react";
-// props 
-// props are an object data 
-// props are readonly data 
-interface IH1Props {
-  className?: string;
-  children: ReactNode;
-}
-
+import { type IH1Props } from "./PageTitle.contract";
 
 
 // export const H1 = (props: Readonly<IH1Props>) => {

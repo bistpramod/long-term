@@ -51,3 +51,42 @@
   - import global at main.tsx  `import "./assets/css/global.css"`
   - Use css at your component 
   - Restart your dev server `pnpm dev`
+
+
+# React Hooks 
+  - Every hook function starts with `use` keyword
+  - can only be used within functional components
+  - Manipulation of any states/hooks are only allowed after component is mounted once
+
+## State and Effect Hooks
+  - `useState` and `useEffect`
+## Context 
+  - `useContext`
+## Performance
+  - `useMemo`, `useCallback`, `useRef`
+## Reducers
+  - `useReducer`,
+## Use
+  - `useEffect => use`
+
+
+```tsx
+
+  useEffect(() => {
+    // activity tracking 
+    console.log("I am always exectued")
+  })
+
+
+  useEffect(() => {
+    console.log("I am only called for the first time when component is mounted")
+    return () => {
+      setLoading(true);
+    }
+  }, [])
+
+
+  useEffect(() => {
+    console.log("I am always exectued when credential state is manipulated")
+  }, [credentials, loading])
+```
