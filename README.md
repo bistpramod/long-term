@@ -89,4 +89,7 @@
   useEffect(() => {
     console.log("I am always exectued when credential state is manipulated")
   }, [credentials, loading])
+
 ```
+
+# Menu and feature for POS Application
