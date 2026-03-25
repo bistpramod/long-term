@@ -1,42 +1,39 @@
-import { useState, type BaseSyntheticEvent } from "react";
 import { TextInput } from "../ui/form/Input";
 import { FormLabel } from "../ui/form/Label";
-
 import { LoginSchema, type ICredentials } from "./Auth.contract";
 
-
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 export default function LoginForm() {
-  const [credentials, setCredentials] = useState<ICredentials>({
-    username: "", 
-    password: ""
-  })
   
-  const handleInputChange = (e: BaseSyntheticEvent) => {
-    const { name, value } = e.target;
-    setCredentials({
-      ...credentials,
-      [name]: value,
-    });
-  }
+  const {control, handleSubmit, formState: {errors}} = useForm<ICredentials>({
+    defaultValues: {
+      username: "",
+      password: "",
+    },
+    resolver: zodResolver(LoginSchema)
+  });
 
-  const login = async(e: BaseSyntheticEvent) => {
+  const login = async(credentials: ICredentials) => {
     try {
-      e.preventDefault()      // default behaviour of form is prevented
-      // validate -> pass 
-      await LoginSchema.parseAsync(credentials)
-      console.log(credentials)
+      console.log(credentials);
     } catch(exception) {
       console.log(exception)
     }
   }
 
   return (
-    <form onSubmit={login} className="flex flex-col gap-5">
+    <form onSubmit={handleSubmit(login)} className="flex flex-col gap-5">
       <div className="flex w-full items-center">
         <FormLabel htmlFor="username">User Name: </FormLabel>
         <div className="w-2/3 flex flex-col gap-1">
-          <TextInput handleChange={handleInputChange} type="text" name="username" />
+          <TextInput
+            control={control}
+            errMsg={errors?.username?.message}
+            type="text"
+            name="username"
+          />
         </div>
       </div>
 
@@ -44,7 +41,8 @@ export default function LoginForm() {
         <FormLabel htmlFor="password">Password: </FormLabel>
         <div className="w-2/3 flex flex-col gap-1">
           <TextInput
-            handleChange={handleInputChange}
+            errMsg={errors?.password?.message}
+            control={control}
             type="password"
             name="password"
           />

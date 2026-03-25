@@ -93,3 +93,90 @@
 ```
 
 # Menu and feature for POS Application
+
+
+## Form handling using hook form 
+- Install packages 
+  - `pnpm i react-hook-form @hookform/resolvers zod`      // zod already exists 
+- Form Design 
+```jsx
+  // /srv/componets/**/LoginForm.tsx
+  //....
+  import z from "zod"
+  import {useForm, Controller} from "react-hook-form"
+  import {zodResolver} from "@hookform/resolvers"
+
+  // vaidation rule 
+  const LoginSchema = z.object({
+    username: z.email().nonempty(),  //... 
+    password: z.email().nonempty().nonoptional()
+  })
+
+  interface ICredentials{
+    username: string, 
+    password: string
+  }
+
+
+  // form component 
+    const {control, handleSubmit, formState: {errors}} = useForm<ICredentials>({
+      defaultValues: {
+        username: "", 
+        password: ""
+      },
+      resolver: zodResolver(LoginSchema)
+    })
+    
+    // ....
+
+    const login = (data: ICredentials) => {
+      // api integrate 
+    }
+
+
+    // return 
+      <form onSubmit={handleSubmit(login)}>
+          
+          <Controller
+            name="username"
+            control={control}
+            render={({field}) => {
+              return <input type="email" {...field} />
+
+            }}
+          />
+
+
+          <InputComponent />
+
+      </form>
+
+// InputComponent
+  import type {Control, Path, FieldValues} from "react-hook-form"
+
+  interface IBaseProps {
+    errMsg?: string,
+    className?: string
+  }
+
+  interface IInputComponentProps<T extends FieldValues> extends IBaseProps {
+    name: Path<T>, 
+    control: Control<T>, 
+    type?: React.HTMLInputTypeAttribute, 
+  }
+
+// import {type FieldValues, Controller} from "react-hook-form"
+  export const InputComponent = <T extends FieldValues>({name, control, type, errMsg=""}:Readonly<IInputComponentProps<T>>) => {
+    return (<Controller
+        name={name}
+        control={control}
+        render={({field}) => {
+          return <>
+            <input type={type} {...field} />
+            <span>{errMsg}</span>
+          </>
+
+        }}
+      />)
+  }
+```

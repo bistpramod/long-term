@@ -30,6 +30,8 @@ const routerData = createBrowserRouter([
     // Product 
       // product list, 
       // product create 
+        // name, description, price, discount, category, brand, code, stock, images, 
+        // createdBy, updatedBy, vendor, sku, status ()
       // product Detail 
       // product Edit.
       // product delete
