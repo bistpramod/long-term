@@ -4,6 +4,11 @@ import { LoginSchema, type ICredentials } from "./Auth.contract";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import axiosInstance from "../../config/ApiClient";
+
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router";
+// import { useState } from "react";
 
 export default function LoginForm() {
   
@@ -15,9 +20,23 @@ export default function LoginForm() {
     resolver: zodResolver(LoginSchema)
   });
 
+  const router = useNavigate();
+
   const login = async(credentials: ICredentials) => {
     try {
-      console.log(credentials);
+      const response = await axiosInstance.post("auth/login", {
+        ...credentials,
+        expiresInMins: 24*60,
+      }) as {accessToken: string}
+      Cookies.set("auth_key_61", response.accessToken, {
+        expires: 1,
+        sameSite: "lax",
+        secure: true,
+      });
+
+
+      const loggedInUser = await axiosInstance.get("auth/me") as {role: string}
+      router("/"+loggedInUser.role)
     } catch(exception) {
       console.log(exception)
     }

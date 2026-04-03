@@ -1,8 +1,8 @@
-import ForgetPasswordForm from "../../components/auth/ForgetPasswordForm";
-import Logo from "../../components/logo/Logo"
+import ResetPasswordForm from "../../components/auth/ResetPasswordForm";
+import Logo from "../../components/logo/Logo";
 import { H1 } from "../../components/ui/typography/PageTitle";
 
-export default function ForgetPassword() {
+export default function ResetPassword() {
   return (
     <>
       {/* Design  */}
@@ -10,7 +10,7 @@ export default function ForgetPassword() {
         <div className="w-1/3 bg-teal-900 flex flex-col h-full p-5 text-white items-center justify-center rounded-md gap-5">
           <Logo />
           <div className="flex gap-5 flex-col w-full items-center justify-center">
-            <H1 className="text-white">Forget Password</H1>
+            <H1 className="text-white">Reset Password</H1>
             <p className="text-center">
               Lorem ipsum dolor sit amet, consectetur adipisicing elit. At rerum
               odio harum architecto ut beatae, quos, suscipit placeat quidem
@@ -22,11 +22,11 @@ export default function ForgetPassword() {
         <div className="w-2/3 flex flex-col gap-10 bg-gray-100 p-10 rounded-md">
           <div className="flex border-b border-b-green-900/30 pb-5">
             <H1 className="text-green-900">
-              <em>Forgot your password?</em>
+              <em>Reset your password?</em>
             </H1>
           </div>
 
-          <ForgetPasswordForm />
+          <ResetPasswordForm />
 
           <div className="flex w-full justify-center items-center">
             <span className="text-lg text-teal-800"> - Or -</span>

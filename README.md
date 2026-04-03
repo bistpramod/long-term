@@ -180,3 +180,82 @@
       />)
   }
 ```
+
+```jsx
+// products
+  // list view table(product)
+  // form
+// order 
+  // list table order
+  
+  // order placement form
+    // table 
+    
+// transactions 
+  // view 
+  // bill view
+// users
+  // view list
+  // order 
+```
+
+
+```jsx
+    localStorage.setItem("token", response.token);
+      localStorage.getItem("token");
+      localStorage.removeItem("token"); // key token remove
+      localStorage.clear(); // all localstorage items
+
+      // sessionStorage.setItem()
+      // sessionStorage.getItem()
+      // sessionStorage.removeItem()
+      // sessionStorage.clear()
+
+      // js default
+      // document.cookie = "token="+response.token+"; expriesIn="+new Date()+"; path=/"
+      // Cookies.set("token", response.token, {
+      //   // domain: "",
+      //   path: "/",      // default
+      //   expires: 1,
+      //   secure: true,   // only transfer to server if https is available
+      //   sameSite: "Lax"
+      // })
+
+      // // remove
+      // // Cookies.remove('token')
+      // per domain 50 cookies 
+        // per cookie => 4096chars
+      // // get
+      // const token = Cookies.get("token")
+      // console.log(token)
+      // web storages
+      // cookies => Server Send(Http cookies), Client Side,
+      // local storages
+      // session storages
+```
+
+## API (Application Programming Interface)
+  - nodejs, php, python, .net, java, 
+  - Response type -> `json`
+    - name, email, id
+  - API Type 
+    - REST, SOAP, Graphql, gRPC
+
+  - CRUD (Create, Read, Update or Delete)
+    - `fetch` or `axios` or `tanstack-query`
+    - `Read => get`, `Create => post`, `Update => put/patch`, `Delete => delete`
+
+  - Base URL: https://dummyjson.com/
+
+## API Integration using Fetch 
+  ```jsx
+      // let response = await fetch(`${import.meta.env.VITE_APP_BASE_URL}auth/login`, {
+      //   method: "POST",
+      //   // headers: {"Content-Type": "application/x-www-form-urlencoded"}
+      //   headers: {"Content-Type": "application/json"},
+      //   // headers: {"Content-Type": "multipart/form-data"}
+      //   body: JSON.stringify(credentials)
+      // });
+      // response = await response.json()
+
+  ```
