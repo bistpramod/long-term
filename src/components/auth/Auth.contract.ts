@@ -10,6 +10,7 @@ export interface ICredentials extends IUsername {
 
 
 export const LoginSchema = z.object({
-  username: z.email("Incorrect Email format").nonempty().nonoptional(),
+  // username: z.email("Incorrect Email format").nonempty().nonoptional(),
+   username: z.string().nonoptional(),
   password: z.string().nonempty("Password is Required").nonoptional()
 })
