@@ -4,6 +4,8 @@ import { LoginSchema, type ICredentials } from "./Auth.contract";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import AxiosInstance from "../../config/ApiClient";
+import Cookies from "js-cookie";
 
 export default function LoginForm() {
   
@@ -17,10 +19,40 @@ export default function LoginForm() {
 
   const login = async(credentials: ICredentials) => {
     try {
-      console.log(credentials);
+    //  let response = await fetch(`${import.meta.env.VITE_APP_BASE_URL}auth/login`, {
+    //     method: "POST",
+    //     headers:{ "Content-Type": "application/json"},
+    //     // headers:{ "Content-Type": "application/x-www-form-urlencoded"},
+    //     // headers:{ "Content-Type": "multipart/form-data"},
+
+    //     body: JSON.stringify(credentials)
+    //  });
+    //  response = await response.json();
+    //  console.log(response)
+
+
+     
+
+     const response = await AxiosInstance.post("auth/login",{...credentials,
+      expiresInMins: 50 ,
+
+    }) as {accessToken:string}
+    Cookies.set("auth_key_61" , response.accessToken, {expires: 1, sameSite : "lax", secure: true }),
+    
+
+     const loggedInUser = await AxiosInstance.get("auth/me") as {roles:string}
+     router('/'+loggedInUser.role)
+     catch(exception){console.log(exception)}}
+
+
+
+
+
     } catch(exception) {
       console.log(exception)
     }
+
+
   }
 
   return (
