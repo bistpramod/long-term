@@ -1,17 +1,16 @@
 import { TextInput } from "../ui/form/Input";
 import { FormLabel } from "../ui/form/Label";
-import { LoginSchema, type ICredentials } from "./Auth.contract";
+import { LoginSchema, type ICredentials, type IUserDetail } from "./Auth.contract";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import axiosInstance from "../../config/ApiClient";
-
-import Cookies from "js-cookie";
-import { useNavigate } from "react-router";
-// import { useState } from "react";
+import { NavLink, useNavigate } from "react-router";
+import { useAuth } from "../../lib/hooks/useAuth";
 
 export default function LoginForm() {
-  
+  const router = useNavigate();
+  const { login } = useAuth();
+
   const {control, handleSubmit, formState: {errors}} = useForm<ICredentials>({
     defaultValues: {
       username: "",
@@ -19,23 +18,10 @@ export default function LoginForm() {
     },
     resolver: zodResolver(LoginSchema)
   });
-
-  const router = useNavigate();
-
-  const login = async(credentials: ICredentials) => {
+  
+  const loginHandle = async(credentials: ICredentials) => {
     try {
-      const response = await axiosInstance.post("auth/login", {
-        ...credentials,
-        expiresInMins: 24*60,
-      }) as {accessToken: string}
-      Cookies.set("auth_key_61", response.accessToken, {
-        expires: 1,
-        sameSite: "lax",
-        secure: true,
-      });
-
-
-      const loggedInUser = await axiosInstance.get("auth/me") as {role: string}
+      const loggedInUser = (await login(credentials)) as IUserDetail
       router("/"+loggedInUser.role)
     } catch(exception) {
       console.log(exception)
@@ -43,7 +29,7 @@ export default function LoginForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit(login)} className="flex flex-col gap-5">
+    <form onSubmit={handleSubmit(loginHandle)} className="flex flex-col gap-5">
       <div className="flex w-full items-center">
         <FormLabel htmlFor="username">User Name: </FormLabel>
         <div className="w-2/3 flex flex-col gap-1">
@@ -68,12 +54,12 @@ export default function LoginForm() {
         </div>
       </div>
       <div className="flex w-full items-center justify-end">
-        <a
-          href="/forget-password"
+        <NavLink
+          to="/forget-password"
           className="text-teal-700 italic text-sm hover:underline hover:text-teal-600 transition hover:scale-96"
         >
           Forgot password?
-        </a>
+        </NavLink>
       </div>
       <div className="flex w-full items-center gap-3">
         <button

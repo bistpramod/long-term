@@ -1,5 +1,4 @@
 import z from "zod";
-import type { noUnrecognized } from "zod/v3";
 
 export interface IUsername {
   username: string;
@@ -22,28 +21,29 @@ export const LoginSchema = z.object({
 });
 
 
-export interface IUserDetails {
-   id:string;
-    firstName: string;
-    lastName: string;
-    email: string;
-    gneder: string
-    phone: string;
-    image:string;
-    address:{
-      address:string,
-      city:string,
-      state: string,
-      stateCodr:string,
-      postalCode:string,
-      coordinates:{
-        lat: number;
-        lng: number;
-
-      };
-      country:string;
-
+export interface IUserDetail {
+  id: number | string;
+  firstName: string;
+  lastName: string;
+  maidenName: string;
+  age: number;
+  gender: string;
+  email: string;
+  phone: string;
+  username: string;
+  birthDate: string;
+  image: string;
+  address: {
+    address: string;
+    city: string,
+    state: string,
+    stateCode: string,
+    postalCode: string,
+    coordinates: {
+      lat: number;
+      lng: number;
     };
-    role:string;
-
+    country: string;
+  };
+  role: string;
 }

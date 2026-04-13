@@ -260,6 +260,22 @@
 
   ```
 
+### Local State management
+### Global State Management
+  
+  - Redux(large scale application)
+    - Store(global state)
+    - Reducers
+    - Consumer(dispatch, store selector)
 
-  contexxt is not backward scompatible 
+  - Context(Small to medium scale Auth )
+    - Create Context(state share, actions)
+    - Provide(to components-provider)
+    - Consumption(call)
 
+## React Optimization 
+  - Component Segreggation (Atomic Design pattern follow)
+    - atoms -> molecule -> Organisims -> template -> Page
+  - Code Splitting 
+
+  - AdminLayout -> Page -> AdminDashboard -> Template -> Header, sidebar, footer, KPI -> HeaderTitle => Molecule => <h1>(atom)

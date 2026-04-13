@@ -1,16 +1,19 @@
-import LeftSidePanel from "../../components/auth/LeftSidePanel";
-import RightSidePanel from "../../components/auth/RightSidePanel";
-// import styles from "./HomePage.module.css";
-// Stateful Component(class based), Stateless Component(functional, with webhook state can be maintained)
-// Functional components
+import { useEffect, type Dispatch, type ReactNode, type SetStateAction } from "react";
+import { useOutletContext } from "react-router";
+import LoginForm from "../../components/auth/LoginForm";
 
 // export (default, named)
 export default function HomePage() {
-  //
+  const {setPageContent} = useOutletContext<{ setPageContent: Dispatch<SetStateAction<{pageTitle: string, content: string, formTitle: ReactNode}>> }>();
+
+  useEffect(()=> {
+    setPageContent({
+      pageTitle: "Welcome Back!",
+      content: "Log in to access your dashboard and manage your content efficiently. We're glad to see you again!",
+      formTitle: "Sign In From Here!!!"
+    })
+  },[])
   return (
-    <section className="bg-gray-50 flex h-screen p-5 gap-5">
-      <LeftSidePanel />
-      <RightSidePanel />
-    </section>
+      <LoginForm />
   );
 }

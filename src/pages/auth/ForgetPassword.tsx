@@ -1,47 +1,43 @@
 import ForgetPasswordForm from "../../components/auth/ForgetPasswordForm";
-import Logo from "../../components/logo/Logo"
-import { H1 } from "../../components/ui/typography/PageTitle";
+import { NavLink, useOutletContext } from "react-router";
+import { useEffect, type Dispatch, type SetStateAction, type ReactNode } from "react";
 
 export default function ForgetPassword() {
+  const { setPageContent } = useOutletContext<{
+    setPageContent: Dispatch<
+      SetStateAction<{
+        pageTitle: string;
+        content: string;
+        formTitle: ReactNode;
+      }>
+    >;
+  }>();
+
+  useEffect(() => {
+    setPageContent({
+      pageTitle: "Forgot Password?",
+      content:
+        "Forgot your password? Don't worry! Enter your registered email address below and we'll email you instructions to reset your password securely. Regain access to all your content and continue managing your dashboard with ease. If you need further assistance, our support team is here to help.",
+   
+      formTitle: "Request for password change",
+    });
+  }, []);
   return (
     <>
-      {/* Design  */}
-      <section className="flex w-full p-5 h-screen">
-        <div className="w-1/3 bg-teal-900 flex flex-col h-full p-5 text-white items-center justify-center rounded-md gap-5">
-          <Logo />
-          <div className="flex gap-5 flex-col w-full items-center justify-center">
-            <H1 className="text-white">Forget Password</H1>
-            <p className="text-center">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. At rerum
-              odio harum architecto ut beatae, quos, suscipit placeat quidem
-              quibusdam distinctio dicta ipsa molestias natus voluptas pariatur
-              dignissimos omnis maxime?
-            </p>
-          </div>
+        <ForgetPasswordForm />
+
+        <div className="flex w-full justify-center items-center">
+          <span className="text-lg text-teal-800"> - Or -</span>
         </div>
-        <div className="w-2/3 flex flex-col gap-10 bg-gray-100 p-10 rounded-md">
-          <div className="flex border-b border-b-green-900/30 pb-5">
-            <H1 className="text-green-900">
-              <em>Forgot your password?</em>
-            </H1>
-          </div>
 
-          <ForgetPasswordForm />
-
-          <div className="flex w-full justify-center items-center">
-            <span className="text-lg text-teal-800"> - Or -</span>
-          </div>
-
-          <div className="flex w-full items-center justify-center">
-            <a
-              href="/"
-              className="border p-2 text-center rounded-full shadow border-teal-800/40 w-full text-teal-700 text-sm hover:underline hover:text-teal-600 hover:bg-teal-800/5 transition hover:scale-98"
-            >
-              Login
-            </a>
-          </div>
+        <div className="flex w-full items-center justify-center">
+          <NavLink
+            to="/"
+            className="border p-2 text-center rounded-full shadow border-teal-800/40 w-full text-teal-700 text-sm hover:underline hover:text-teal-600 hover:bg-teal-800/5 transition hover:scale-98"
+          >
+            Login
+          </NavLink>
         </div>
-      </section>
     </>
   );
 }

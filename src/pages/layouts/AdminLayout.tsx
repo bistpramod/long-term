@@ -2,13 +2,12 @@ import { Outlet } from "react-router";
 import Logo from "../../components/logo/Logo";
 import { LuCircleUserRound } from "react-icons/lu";
 import { AdminSidebar } from "../../components/ui/sidebar/AdminSidebar";
+import { useAuth } from "../../lib/hooks/useAuth";
+import type { IUserDetail } from "../../components/auth/Auth.contract";
 
 export default function AdminLayout() {
   // auth 
-  const loggedInUser = {
-    name: "Sandesh Bhattarai",
-    role: "admin"
-  }
+  const {authUser} = useAuth()
   return (
     <>
       <section className="w-full bg-gray-100 h-screen">
@@ -27,7 +26,9 @@ export default function AdminLayout() {
                   className="flex items-center gap-3 text-sm font-medium transition-colors focus:relative hover:cursor-pointer"
                 >
                   <LuCircleUserRound className="size-7" />
-                  <span className="font-semibold">Sandesh Bhattarai</span>
+                  <span className="font-semibold">
+                    {authUser?.firstName} {authUser?.lastName}
+                  </span>
                 </button>
               </span>
 
@@ -71,12 +72,11 @@ export default function AdminLayout() {
         </header>
 
         <main className="flex w-full gap-3">
-          
           {/* {
             (loggedInUser.role === 'admin') ? <AdminSidebar /> : <></>
           } */}
-          <AdminSidebar loggedInUser={loggedInUser} /> 
-          
+          <AdminSidebar loggedInUser={authUser as IUserDetail} />
+
           <section className="w-full bg-gray-200 p-3 mt-3 rounded-md">
             <Outlet />
           </section>
