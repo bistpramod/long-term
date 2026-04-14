@@ -12,6 +12,16 @@ const ResetPasswordSchema = z.object({
   confirmPassword: z.string().min(8).nonempty().nonoptional(),
 });
 
+// can be written as this too 
+
+// const ResetPasswordSchema = z.object({
+//   password: z.string().min(8, "Password must be at least 8 characters"),
+//   confirmPassword: z.string().min(8, "Password must be at least 8 characters"),
+// }).refine((data) => data.password === data.confirmPassword, {
+//   message: "Passwords don't match",
+//   path: ["confirmPassword"],
+// });
+
 export default function ResetPasswordForm() {
   const { control, handleSubmit, formState: { errors, isSubmitting }, } = useForm({
     defaultValues: { password: "", confirmPassword: "" },
